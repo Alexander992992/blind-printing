@@ -34,7 +34,7 @@ export default {
   },
   methods: {
     langChange() {
-      this.nowText = 0;
+      this.nowText = 1;
       this.fetchTexts();
     },
     nextText(){
