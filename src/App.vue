@@ -28,7 +28,7 @@ export default {
     return {
       texts: [],
       nowText: 0,
-      nowLang: "en",
+      nowLang: "ru",
       langs: ["ru", "en"]
     }
   },
