@@ -1,10 +1,12 @@
 <template>
   <form @submit.prevent>
     <input
-        class="enter"
+        class="enter font"
         id="enterId"
+        autocomplete="off"
         :value="inputEnter"
-        @input="inputEnter = $event.target.value"
+        @input="handleInput"
+        @focus="startTyping"
         type="text"
         :style="{
           'background': checkingCorrect
@@ -12,7 +14,7 @@
     >
     <transition-group name="list-texts">
       <p
-          class="enter-text"
+          class="enter-text font"
           v-for="text in texts"
           :key="text.id"
       >
@@ -26,7 +28,8 @@
 export default {
   data() {
     return {
-      inputEnter: ""
+      inputEnter: "",
+      lastInputLength: 0
     }
   },
   props: {
@@ -38,6 +41,7 @@ export default {
   computed: {
     checkingCorrect() {
       if (this.texts[0].content === this.inputEnter) {
+        this.calculateSpeed();
         this.$emit("next")
         this.inputEnter = ""
         const enterId = document.getElementById("enterId")
@@ -49,26 +53,38 @@ export default {
         return "red"
       }
     }
+  },
+  methods: {
+    handleInput(event) {
+      this.inputEnter = event.target.value;
+      if (this.inputEnter.length === 1 && this.lastInputLength === 0) {
+        this.$emit('start-typing');
+      }
+      this.lastInputLength = this.inputEnter.length;
+    },
+    startTyping() {
+      this.$emit('start-typing');
+    },
+    calculateSpeed() {
+      if (this.inputEnter.length > 0) {
+        this.$emit('calculate-speed', this.inputEnter.length);
+      }
+    }
   }
 }
 </script>
 
 <style scoped>
-
 .enter {
   width: 100%;
   border: 2px solid deepskyblue;
   outline: none;
   border-radius: 5px;
   padding: 10px 13px;
-  font-size: 20px;
-  font-family: "Arial";
 }
 
 .enter-text {
   margin: 15px;
-  font-size: 20px;
-  font-family: "Arial";
 }
 
 .list-texts-move,
@@ -87,4 +103,8 @@ export default {
   position: absolute;
 }
 
+.font {
+  font-size: 20px;
+  font-family: "Arial";
+}
 </style>
