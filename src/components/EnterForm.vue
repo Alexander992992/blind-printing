@@ -2,11 +2,11 @@
   <form @submit.prevent>
     <input
         class="enter font"
-        id="enterId"
         autocomplete="off"
         :value="inputEnter"
+        :placeholder="inputEnterPlace"
         @input="handleInput"
-        @focus="startTyping"
+        @focus="startInputEnter"
         type="text"
         :style="{
           'background': checkingCorrect
@@ -29,6 +29,7 @@ export default {
   data() {
     return {
       inputEnter: "",
+      inputEnterPlace: "",
       lastInputLength: 0
     }
   },
@@ -44,9 +45,7 @@ export default {
         this.calculateSpeed();
         this.$emit("next")
         this.inputEnter = ""
-        const enterId = document.getElementById("enterId")
-        enterId.placeholder = "Предложение написано верно"
-        return "white"
+        this.inputEnterPlace = "Предложение введено правильно"
       } else if (this.texts[0].content.indexOf(this.inputEnter) === 0) {
         return "white"
       } else {
@@ -62,12 +61,13 @@ export default {
       }
       this.lastInputLength = this.inputEnter.length;
     },
-    startTyping() {
+    startInputEnter() {
       this.$emit('start-typing');
     },
     calculateSpeed() {
       if (this.inputEnter.length > 0) {
         this.$emit('calculate-speed', this.inputEnter.length);
+        this.lastInputLength = 0;
       }
     }
   }

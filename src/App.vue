@@ -20,10 +20,7 @@
           @start-typing="startTypingTimer"
           @calculate-speed="calculateSpeed"
       />
-      <div v-else>Загрузка текстов...</div>
-    </div>
-    <div class="footer">
-      <h3>Автор</h3>
+      <div class="font" v-else>Загрузка текстов...</div>
     </div>
   </div>
 </template>
@@ -108,7 +105,7 @@ export default {
 .app {
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 150px 1fr 100px;
+  grid-template-rows: 150px 1fr;
   gap: 10px 10px;
   height: 100vh;
 }
@@ -116,7 +113,7 @@ export default {
 .langSelect {
   padding: 5px 12px;
   width: 60px;
-  height: 50px;
+  height: 40px;
   border: 2px solid deepskyblue;
   border-radius: 5px;
   background-color: white;
