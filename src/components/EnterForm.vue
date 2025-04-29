@@ -6,11 +6,8 @@
         :value="inputEnter"
         :placeholder="inputEnterPlace"
         @input="handleInput"
-        @focus="startInputEnter"
         type="text"
-        :style="{
-          'background': checkingCorrect
-        }"
+        :style="{'background': checkingCorrect}"
     >
     <transition-group name="list-texts">
       <p
@@ -42,10 +39,11 @@ export default {
   computed: {
     checkingCorrect() {
       if (this.texts[0].content === this.inputEnter) {
-        this.calculateSpeed();
+        this.$emit('calculate-speed', this.inputEnter.length);
         this.$emit("next")
         this.inputEnter = ""
         this.inputEnterPlace = "Предложение введено правильно"
+        this.lastInputLength = 0;
       } else if (this.texts[0].content.indexOf(this.inputEnter) === 0) {
         return "white"
       } else {
@@ -60,15 +58,6 @@ export default {
         this.$emit('start-typing');
       }
       this.lastInputLength = this.inputEnter.length;
-    },
-    startInputEnter() {
-      this.$emit('start-typing');
-    },
-    calculateSpeed() {
-      if (this.inputEnter.length > 0) {
-        this.$emit('calculate-speed', this.inputEnter.length);
-        this.lastInputLength = 0;
-      }
     }
   }
 }
@@ -85,6 +74,7 @@ export default {
 
 .enter-text {
   margin: 15px;
+  user-select: none;
 }
 
 .list-texts-move,
