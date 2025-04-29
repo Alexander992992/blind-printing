@@ -1,7 +1,7 @@
 <template>
   <select class="font" :value="modelValue" @change="langChange">
-    <option v-for="option in options" :key="option" :value="option">
-      {{ option }}
+    <option v-for="option in options" :key="option.id" :value="option.id">
+      {{ option.value }}
     </option>
   </select>
 </template>
@@ -30,8 +30,6 @@ export default {
 
 select {
   padding: 5px 12px;
-  width: 60px;
-  height: 40px;
   border: 2px solid deepskyblue;
   border-radius: 5px;
   background-color: white;
