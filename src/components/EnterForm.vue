@@ -42,7 +42,7 @@ export default {
         this.$emit('calculate-speed', this.inputEnter.length);
         this.$emit("next")
         this.inputEnter = ""
-        this.inputEnterPlace = "Предложение введено правильно"
+        this.inputEnterPlace = "Текст введен правильно"
         this.lastInputLength = 0;
       } else if (this.texts[0].content.indexOf(this.inputEnter) === 0) {
         return "white"

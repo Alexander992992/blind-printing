@@ -19,6 +19,12 @@
     </div>
     <div class="righttop">
       <my-select
+          :options="levels"
+          :option="nowLevel"
+          v-model="nowLevel"
+          @change="levelChange"
+      />
+      <my-select
           :options="langs"
           :option="nowLang"
           v-model="nowLang"
@@ -45,7 +51,16 @@ export default {
       texts: [],
       nowText: 0,
       nowLang: "ru",
-      langs: ["ru", "en"],
+      langs: [
+        {id: "ru", value: "Русский"},
+        {id: "en", value: "English"}
+      ],
+      nowLevel: 1,
+      levels: [
+        {id: 1, value: "Начальный"},
+        {id: 2, value: "Продвинутый"},
+        {id: 3, value: "Профессиональный"}
+      ],
       speedNow: 0,
       averageSpeed: 0,
       speedHistory: [],
@@ -54,6 +69,11 @@ export default {
   },
   methods: {
     langChange() {
+      this.nowText = 0;
+      this.fetchTexts();
+      this.resetSpeedData();
+    },
+    levelChange() {
       this.nowText = 0;
       this.fetchTexts();
       this.resetSpeedData();
@@ -88,7 +108,7 @@ export default {
     },
     async fetchTexts() {
       try {
-        const response = await axios.get(`https://blind-printing-tab-default-rtdb.europe-west1.firebasedatabase.app/${this.nowLang}.json`);
+        const response = await axios.get(`https://blind-printing-tab-default-rtdb.europe-west1.firebasedatabase.app/${this.nowLang}/${this.nowLevel}.json`);
         this.texts = response.data;
       } catch (e) {
         alert("Ошибка")
@@ -132,15 +152,17 @@ export default {
 .main {
   justify-self: center;
   align-self: start;
-  grid-column: 2 / 5;
+  grid-column: 1 / 6;
   grid-row: 2 / 3;
 }
 
 .righttop {
+  display: flex;
   justify-self: end;
   grid-column: 5 / 6;
   grid-row: 1 / 2;
 }
+
 
 .font {
   margin: 10px;
