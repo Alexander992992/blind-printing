@@ -1,16 +1,11 @@
 <template>
   <div class="app">
-    <div class="head">
+    <div class="lefttop">
       <div class="speedText font">
         <div>Скорость печати: {{ speedNow }} зн/мин</div>
         <div>Средняя скорость печати: {{ averageSpeed }} зн/мин</div>
         <my-button @click="resetSpeedData">Сбросить</my-button>
       </div>
-      <select class="langSelect font" v-model="nowLang" @change="langChange">
-        <option v-for="lang in langs">
-          {{ lang }}
-        </option>
-      </select>
     </div>
     <div class="main">
       <enter-form
@@ -22,17 +17,28 @@
       />
       <div class="font" v-else>Загрузка текстов...</div>
     </div>
+    <div class="righttop">
+      <my-select
+          :options="langs"
+          :option="nowLang"
+          v-model="nowLang"
+          @change="langChange"
+      />
+    </div>
   </div>
 </template>
 
 <script>
 import EnterForm from "@/components/EnterForm";
 import MyButton from "@/components/MyButton";
+import MySelect from "@/components/MySelect";
 import axios from "axios";
 
 export default {
   components: {
-    EnterForm, MyButton
+    EnterForm,
+    MyButton,
+    MySelect,
   },
   data() {
     return {
@@ -104,20 +110,11 @@ export default {
 
 .app {
   display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 150px 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 2fr;
   gap: 10px 10px;
   height: 100vh;
-}
-
-.langSelect {
-  padding: 5px 12px;
-  width: 60px;
-  height: 40px;
-  border: 2px solid deepskyblue;
-  border-radius: 5px;
-  background-color: white;
-  outline: none;
+  align-items: start;
 }
 
 .speedText {
@@ -126,15 +123,23 @@ export default {
   padding: 10px;
 }
 
-.head {
-  display: flex;
-  justify-self: end;
-  align-self: center;
+.lefttop {
+  justify-self: start;
+  grid-column: 1 / 3;
+  grid-row: 1 / 2;
 }
 
 .main {
   justify-self: center;
-  align-self: center;
+  align-self: start;
+  grid-column: 2 / 5;
+  grid-row: 2 / 3;
+}
+
+.righttop {
+  justify-self: end;
+  grid-column: 5 / 6;
+  grid-row: 1 / 2;
 }
 
 .font {
