@@ -47,7 +47,7 @@ export default {
       } else if (this.texts[0].content.indexOf(this.inputEnter) === 0) {
         return "white"
       } else {
-        return "red"
+        return "rgba(255, 0, 0, 0.2)"
       }
     }
   },
