@@ -4,7 +4,7 @@
       <div class="speedText font">
         <div>Скорость печати: {{ speedNow }} зн/мин</div>
         <div>Средняя скорость печати: {{ averageSpeed }} зн/мин</div>
-        <my-button @click="resetSpeedData">Сбросить</my-button>
+        <v-btn @click="resetSpeedData" class="btn">Сбросить</v-btn>
       </div>
     </div>
     <div class="main">
@@ -137,10 +137,16 @@ export default {
   align-items: start;
 }
 
+
 .speedText {
   border: 2px solid deepskyblue;
   border-radius: 5px;
   padding: 10px;
+}
+
+.btn {
+  margin-top: 10px;
+  background-color: rgba(0, 191, 255, 0.2);
 }
 
 .lefttop {
